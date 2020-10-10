@@ -39,13 +39,20 @@ function init() {
   });
   const brick = new THREE.Mesh(geometry, material);
   const rowCount = 20;
-  const brickCountPerRow = 1;
+  const brickCountPerRow = 3;
   for (let row = 1; row <= rowCount; row++) {
     const yPos = row * (height + 0.05);
+    let zOffset = -1;
     for (let count = 1; count <= brickCountPerRow; count++) {
       const block = brick.clone();
-      block.position.set(0, yPos, 0);
+      if (row % 2 === 0) {
+        block.rotation.y = Math.PI / 2;
+        block.position.set(zOffset, yPos, 0);
+      } else {
+        block.position.set(0, yPos, zOffset);
+      }
       scene.add(block);
+      zOffset++;
     }
   }
 
